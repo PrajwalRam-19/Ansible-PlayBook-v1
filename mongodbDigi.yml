@@ -1,0 +1,38 @@
+Manual installation ubuntu 20
+-------------------
+  
+  curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+  
+  apt-key list
+  
+  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+  sudo apt update
+  sudo apt install mongodb-org
+  
+  Starting the MongoDB Service and Testing the Database
+-------------------------------------------------------
+  sudo systemctl start mongod.service
+  sudo systemctl status mongod
+sudo systemctl enable mongod
+mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+  
+  Managing the MongoDB Service
+  -------------------------------
+
+  sudo systemctl status mongod
+  sudo systemctl stop mongod
+  sudo systemctl start mongod
+  sudo systemctl restart mongod
+  sudo systemctl disable mongod
+  sudo systemctl enable mongod
+  
+  
+  
+  
+  Ansible play book
+  -----------------
+---
+- name: install mongodb
+  hosts: all
+  become: yes
+  tasks:

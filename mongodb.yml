@@ -1,0 +1,29 @@
+Manual steps
+-------------
+1.sudo apt update && sudo apt upgrade
+2.sudo apt install -y mongodb
+3.sudo systemctl status mongodb
+4. Now check if the installation process is done correctly and everything is working fine. Go through the following command:
+     mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+5.sudo systemctl stop mongodb
+6.sudo systemctl status mongodb
+7.sudo systemctl start mongodb
+
+
+
+Ansible-play book
+-----------------
+---
+- name: install mongodb
+  hosts: all
+  become: yes
+  tasks:
+    - name: mongodb installation
+      ansible.builtin.apt:
+          name: mongodb
+          state: present
+          update_cache: yes
+    - name: Make sure a service unit is running
+      ansible.builtin.systemd:
+          state: started
+          name: mongodb
